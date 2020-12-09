@@ -1,5 +1,7 @@
-const Login = () =>{
-  return(
+import React from "react"
+
+const Login = () => {
+  return (
     <div>
       Login
     </div>
