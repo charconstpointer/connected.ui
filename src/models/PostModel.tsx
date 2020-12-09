@@ -1,4 +1,4 @@
-import UserModel from "./UserModel";
+import UserModel, { userFromJson } from "./UserModel";
 
 export default class PostModel {
   id: number;
@@ -10,11 +10,12 @@ export default class PostModel {
     this.id = id;
     this.body = body;
     this.postDate = postDate;
-    this.poster = postDate;
+    this.poster = poster;
   }
   // public <CommentDto> Comments :IEnumerable;
 }
 
-export const userFromJson = (data: any): PostModel => {
-  return new PostModel(data.id, data.body, data.postDate, new UserModel());
+export const postFromJson = (data: any): PostModel => {
+  console.log(data)
+  return new PostModel(data.id, data.body, data.postDate, userFromJson(data.poster));
 }
