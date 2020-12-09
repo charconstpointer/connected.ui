@@ -4,7 +4,7 @@ import CreateNewGroup from '../requests/CreateNewGroup'
 import GroupList from './GroupList'
 
 export const Groups = () => {
-
+  const [token, setToken] = useState(localStorage.getItem("token"));
   const [groupName, setGroupName] = useState("");
   const [description, setDescription] = useState("");
   const [groups, setGroups] = useState<Group[]>([]);
@@ -39,11 +39,12 @@ export const Groups = () => {
     const response = await fetch("https://localhost:5001/groups", {
       method: "POST",
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
       },
       body: JSON.stringify(request)
     })
-    if (response.status != 500) {
+    if (response.status !== 500) {
       setGroups(groups => [...groups, fromJson(request)]);
     }
   }
