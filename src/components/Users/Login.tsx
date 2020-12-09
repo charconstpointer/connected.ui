@@ -9,7 +9,7 @@ const Login = (props: any) => {
   const [email, setEmail] = useState("");
   const [token, setToken] = useState(localStorage.getItem("token"));
   const [isLoggedIn, setIsLoggedIn] = useState(token!?.length > 0);
-
+  console.log(isLoggedIn, token)
   const handleLoginChange = (e: any) => {
     setLogin(e.target.value)
   }
@@ -35,11 +35,18 @@ const Login = (props: any) => {
     });
     const token = await response.text();
     localStorage.setItem("token", token);
+    console.log("logged in")
+    setIsLoggedIn(true)
+  }
 
+  const handleLogout = () => {
+    setIsLoggedIn(false);
+    localStorage.setItem("token", "")
+    console.log(localStorage.getItem("token"))
   }
   return (
     <div>
-      {isLoggedIn ?
+      {!isLoggedIn ?
         <>
           <form>
             <input type="text" onChange={handleLoginChange} />
@@ -48,7 +55,7 @@ const Login = (props: any) => {
           <button onClick={handleLogin} >Register</button>
         </>
         :
-        <button>Logout</button>
+        <button onClick={handleLogout}>Logout</button>
       }
     </div>
   )

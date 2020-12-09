@@ -10,6 +10,7 @@ const Register = (props: any) => {
   const [token, setToken] = useState(localStorage.getItem("token"));
   const [isLoggedIn, setIsLoggedIn] = useState(token!?.length > 0);
 
+
   const handleLoginChange = (e: any) => {
     setLogin(e.target.value)
   }
@@ -34,10 +35,14 @@ const Register = (props: any) => {
       body: JSON.stringify(request)
     })
     console.log(response.status)
+    if (response.status !== 201) {
+      console.error("something went wrong")
+    }
+
   }
   return (
     <div>
-      {isLoggedIn ?
+      {!isLoggedIn ?
         <>
           <form>
             <input type="text" onChange={handleLoginChange} />

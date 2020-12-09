@@ -10,14 +10,14 @@ const Group = () => {
   const [token, setToken] = useState(localStorage.getItem("token"));
 
   const id = params.id;
+  const fetchGroup = async () => {
+    const response = await fetch(`https://localhost:5001/groups/${id}`)
+    const data = await response.json();
+    const posts = data.posts.map((x: any) => postFromJson(x));
+    const g = new GroupModel(data.id, data.name, data.tags, posts, []);
+    setGroup(g);
+  }
   useEffect(() => {
-    const fetchGroup = async () => {
-      const response = await fetch(`https://localhost:5001/groups/${id}`)
-      const data = await response.json();
-      const posts = data.posts.map((x: any) => postFromJson(x));
-      const g = new GroupModel(data.id, data.name, data.tags, posts, []);
-      setGroup(g);
-    }
     fetchGroup();
   }, []);
   const [post, setPost] = useState<string>();
@@ -37,7 +37,7 @@ const Group = () => {
       console.error("nope!")
       return
     }
-
+    fetchGroup()
   }
   return (
     <div>
