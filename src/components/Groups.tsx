@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Group, { fromJson } from "../models/Group";
-import CreateNewGroup from '../requests/createNewGroup'
+import CreateNewGroup from '../requests/CreateNewGroup'
 import GroupList from './GroupList'
 export const Groups = () => {
   const [groupName, setGroupName] = useState("");
