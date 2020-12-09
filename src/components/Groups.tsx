@@ -2,19 +2,31 @@ import React, { useEffect, useState } from "react";
 import Group, { fromJson } from "../models/Group";
 import CreateNewGroup from '../requests/CreateNewGroup'
 import GroupList from './GroupList'
+
 export const Groups = () => {
+
   const [groupName, setGroupName] = useState("");
   const [description, setDescription] = useState("");
   const [groups, setGroups] = useState<Group[]>([]);
+
   useEffect(() => {
-    fetch("https://localhost:5001/groups")
-      .then(data => data.json())
-      .then(groups => {
-        const gs = groups.map((gr: { name: string; }) => new CreateNewGroup(gr.name, gr.name))
-        setGroups(g => [...g, gs])
-      })
-      .catch(console.error)
+    const fetchGroups = async () => {
+      console.log('uef')
+
+      const response = await fetch("https://localhost:5001/groups")
+      console.log(response);
+
+      const data = await response.json();
+      console.log(data);
+
+      const gs = data.map((gr: any) => fromJson(gr))
+      setGroups(g => [...g, ...gs])
+      console.log(groups)
+    }
+    fetchGroups()
   }, [])
+
+
   const handleGroupNameChange = (ev: any) => {
     setGroupName(ev.target.value);
   }
