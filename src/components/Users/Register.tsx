@@ -2,7 +2,8 @@ import { useState } from "react";
 import RegisterRequest from "../../requests/RegisterRequest";
 import { v } from "../../validators/RegistrationValidator";
 
-const Register = () => {
+const Register = (props: any) => {
+  console.log(props.logged)
   const [login, setLogin] = useState("");
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");

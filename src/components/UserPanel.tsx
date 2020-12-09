@@ -3,6 +3,9 @@ import Register from './Users/Register'
 import Login from './Users/Login'
 
 const UserPanel = () => {
+  const [token, setToken] = useState(localStorage.getItem("token"));
+  const [isLoggedIn, setIsLoggedIn] = useState(token!?.length > 0);
+  console.log(token, isLoggedIn)
   const [tab, setTab] = useState(0);
   const handleChangeTab = (tab: number) => {
     setTab(tab);
@@ -19,7 +22,7 @@ const UserPanel = () => {
             aria-selected="false">Register</a>
         </li>
       </ul>
-      {tab === 0 ? <Login /> : <Register />}
+      {tab === 0 ? <Login logged={isLoggedIn} /> : <Register logged={isLoggedIn} />}
     </div>
   )
 }

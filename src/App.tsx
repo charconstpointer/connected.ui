@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Home from './components/Home'
 import Groups from './components/Groups'
 import Navigation from './components/Navigation'
-import Login from './components/UserPanel'
+import UserPanel from './components/UserPanel'
 import Contact from './components/Contact'
 
 function App() {
@@ -15,7 +15,7 @@ function App() {
           <Route exact path={"/"} component={Home} />
           <Route exact path={"/groups"} component={Groups} />
           <Route exact path={"/contact"} component={Contact} />
-          <Route exact path={"/login"} component={Login} />
+          <Route exact path={"/login"} component={UserPanel} />
         </Switch>
       </Router>
     </div>

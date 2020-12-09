@@ -2,8 +2,8 @@ import { useState } from "react";
 import { lv } from "../../validators/LoginValidator";
 import LoginRequest from '../../requests/LoginRequest'
 
-const Login = () => {
-
+const Login = (props: any) => {
+  console.log(props.logged)
   const [login, setLogin] = useState("");
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
@@ -33,6 +33,7 @@ const Login = () => {
     });
     const token = await response.text();
     localStorage.setItem("token", token);
+    console.log("Ok")
   }
   return (
     <div>
