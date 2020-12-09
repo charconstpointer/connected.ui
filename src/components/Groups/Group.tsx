@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import GroupModel from "../../models/GroupModel";
-import UserModel from "../../models/UserModel";
+import { userFromJson } from "../../models/PostModel";
+
 
 const Group = () => {
   let params: any = useParams();
@@ -11,7 +12,8 @@ const Group = () => {
     const fetchGroup = async () => {
       const response = await fetch(`https://localhost:5001/groups/${id}`)
       const data = await response.json();
-      const g = new GroupModel(data.id, data.name, data.tags, [], []);
+      const posts = data.posts.map((x: any) => userFromJson(x));
+      const g = new GroupModel(data.id, data.name, data.tags, posts, []);
       setGroup(g);
     }
     fetchGroup();
@@ -20,7 +22,15 @@ const Group = () => {
     <div>
       <h1>{group?.name}</h1>
       <h4>{group?.tags}</h4>
-
+      <p>Posts</p>
+      {group?.posts.map(p => {
+        return (
+          <div key={p.id}>
+            <p >Content : {p.body}</p>
+            <p>Posted at : {p.postDate}</p>
+          </div>
+        )
+      })}
     </div>
     // <div>
     //   <ul className="list-group list-group-flush">

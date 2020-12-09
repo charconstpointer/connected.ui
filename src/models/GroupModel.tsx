@@ -15,11 +15,6 @@ export default class GroupModel {
     }
 }
 
-
-
-
-
-
 export const fromJson = (data: any): GroupModel => {
     const group = new GroupModel(data.id, data.name, data.tags, data.posts, data.users);
     return group;

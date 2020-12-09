@@ -1,10 +1,10 @@
 import UserModel from "./UserModel";
 
 export default class PostModel {
-  public id: number;
-  public body: string;
-  public postDate: Date;
-  public poster: UserModel;
+  id: number;
+  body: string;
+  postDate: Date;
+  poster: UserModel;
 
   constructor(id: number, body: string, postDate: Date, poster: UserModel) {
     this.id = id;
@@ -13,4 +13,8 @@ export default class PostModel {
     this.poster = postDate;
   }
   // public <CommentDto> Comments :IEnumerable;
+}
+
+export const userFromJson = (data: any): PostModel => {
+  return new PostModel(data.id, data.body, data.postDate, new UserModel());
 }
