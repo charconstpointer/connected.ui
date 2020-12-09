@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Home from './components/Home'
 import Groups from './components/Groups'
 import Navigation from './components/Navigation'
-import Login from './components/Login'
+import Login from './components/UserPanel'
 import Contact from './components/Contact'
 
 function App() {

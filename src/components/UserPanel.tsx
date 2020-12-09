@@ -19,7 +19,7 @@ const UserPanel = () => {
             aria-selected="false">Register</a>
         </li>
       </ul>
-      {tab === 0 ? <Register/> : <Login/>}
+      {tab === 0 ? <Login /> : <Register />}
     </div>
   )
 }
