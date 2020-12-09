@@ -4,6 +4,8 @@ import GroupModel from "../../models/GroupModel";
 import PostModel, { postFromJson } from "../../models/PostModel";
 import CreateNewPost from '../../requests/CreateNewPost'
 
+import Post from '../Posts/Post'
+
 const Group = () => {
   let params: any = useParams();
   const [group, setGroup] = useState<GroupModel>();
@@ -44,14 +46,9 @@ const Group = () => {
       <h1>{group?.name}</h1>
       <h4>{group?.tags}</h4>
       <p>Posts</p>
-      {group?.posts.map(p => {
-        return (
-          <div key={p.id}>
-            <p>Author : {p.poster.username}</p>
-            <p>Content : {p.body}</p>
-            <p>Posted at : {p.postDate}</p>
-          </div>
-        )
+      {group?.posts.map((p: PostModel) => {
+        console.log(p)
+        return <Post p={p} groupId={group.id} />
       })}
       <input type="text" placeholder="Your post" onChange={handlePostChange} />
       <button onClick={handleSendPost} >Send</button>
