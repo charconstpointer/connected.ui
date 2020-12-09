@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import Group, { fromJson } from "../models/Group";
+import GroupModel, { fromJson } from "../models/GroupModel";
 import CreateNewGroup from '../requests/CreateNewGroup'
 import GroupList from './GroupList'
 
@@ -7,7 +7,7 @@ export const Groups = () => {
   const [token, setToken] = useState(localStorage.getItem("token"));
   const [groupName, setGroupName] = useState("");
   const [description, setDescription] = useState("");
-  const [groups, setGroups] = useState<Group[]>([]);
+  const [groups, setGroups] = useState<GroupModel[]>([]);
 
   useEffect(() => {
     const fetchGroups = async () => {

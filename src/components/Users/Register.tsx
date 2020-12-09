@@ -7,6 +7,8 @@ const Register = (props: any) => {
   const [login, setLogin] = useState("");
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
+  const [token, setToken] = useState(localStorage.getItem("token"));
+  const [isLoggedIn, setIsLoggedIn] = useState(token!?.length > 0);
 
   const handleLoginChange = (e: any) => {
     setLogin(e.target.value)
@@ -35,12 +37,15 @@ const Register = (props: any) => {
   }
   return (
     <div>
-      <form>
-        <input type="text" onChange={handleLoginChange} />
-        <input type="password" onChange={handlePasswordChange} />
-        <input type="email" onChange={handleEmailChange} />
-      </form>
-      <button onClick={handleRegister} >Register</button>
+      {isLoggedIn ?
+        <>
+          <form>
+            <input type="text" onChange={handleLoginChange} />
+            <input type="password" onChange={handlePasswordChange} />
+            <input type="email" onChange={handleEmailChange} />
+          </form>
+          <button onClick={handleRegister} >Register</button>
+        </> : <p>Please logout first to create another account</p>}
     </div>
   )
 }

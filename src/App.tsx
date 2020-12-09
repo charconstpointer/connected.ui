@@ -5,6 +5,7 @@ import Groups from './components/Groups'
 import Navigation from './components/Navigation'
 import UserPanel from './components/UserPanel'
 import Contact from './components/Contact'
+import Group from './components/Groups/Group'
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
           <Route exact path={"/groups"} component={Groups} />
           <Route exact path={"/contact"} component={Contact} />
           <Route exact path={"/login"} component={UserPanel} />
+          <Route exact path={"/groups/:id"} component={Group} />
         </Switch>
       </Router>
     </div>

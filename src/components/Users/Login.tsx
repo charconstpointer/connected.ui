@@ -7,6 +7,8 @@ const Login = (props: any) => {
   const [login, setLogin] = useState("");
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
+  const [token, setToken] = useState(localStorage.getItem("token"));
+  const [isLoggedIn, setIsLoggedIn] = useState(token!?.length > 0);
 
   const handleLoginChange = (e: any) => {
     setLogin(e.target.value)
@@ -33,15 +35,21 @@ const Login = (props: any) => {
     });
     const token = await response.text();
     localStorage.setItem("token", token);
-    console.log("Ok")
+
   }
   return (
     <div>
-      <form>
-        <input type="text" onChange={handleLoginChange} />
-        <input type="password" onChange={handlePasswordChange} />
-      </form>
-      <button onClick={handleLogin} >Register</button>
+      {isLoggedIn ?
+        <>
+          <form>
+            <input type="text" onChange={handleLoginChange} />
+            <input type="password" onChange={handlePasswordChange} />
+          </form>
+          <button onClick={handleLogin} >Register</button>
+        </>
+        :
+        <button>Logout</button>
+      }
     </div>
   )
 }
