@@ -7,7 +7,7 @@ function App() {
   return (
     <div className="container p-5">
       <Router>
-        <Navigation/>
+        <Navigation />
         <Switch>
           <Route exact path={"/"} component={Home} />
         </Switch>
