@@ -4,7 +4,7 @@ import { useParams } from "react-router-dom";
 import GroupModel from "../../models/GroupModel";
 import PostModel, { postFromJson } from "../../models/PostModel";
 import CreateNewPost from '../../requests/CreateNewPost'
-
+import { Post as POST } from "../../utils/api";
 import Post from '../Posts/Post'
 
 const Group = () => {
@@ -28,14 +28,7 @@ const Group = () => {
     setPost(e.target.value)
   }
   const handleSendPost = async () => {
-    const response = await fetch(`https://localhost:5001/groups/${group?.id}/posts`, {
-      method: "POST",
-      headers: {
-        'Content-Type': "application/json",
-        'Authorization': `Bearer ${token}`
-      },
-      body: JSON.stringify(new CreateNewPost(post!))
-    })
+    const response = await POST(`https://localhost:5001/groups/${group?.id}/posts`, new CreateNewPost(post!))
     if (response.status !== 200) {
       console.error("nope!")
       return
@@ -46,8 +39,6 @@ const Group = () => {
     <div className="posts" >
       <h1 className="display-3 pb-2 pt-5">{group?.name}</h1>
       {group?.tags.map(t => <span className="badge badge-secondary">{t} </span>)}
-
-
       {group?.posts.length === 0 ? <p>no posts</p> : null}
       {group?.posts.map((p: PostModel) => {
         console.log(p)
