@@ -1,3 +1,4 @@
+import React from "react";
 import { useState } from "react";
 import RegisterRequest from "../../requests/RegisterRequest";
 import { v } from "../../validators/RegistrationValidator";
@@ -49,7 +50,7 @@ const Register = (props: any) => {
             <input type="password" onChange={handlePasswordChange} />
             <input type="email" onChange={handleEmailChange} />
           </form>
-          <button onClick={handleRegister} >Register</button>
+          <button className="btn btn-primary" onClick={handleRegister} >Register</button>
         </> : <p>Please logout first to create another account</p>}
     </div>
   )

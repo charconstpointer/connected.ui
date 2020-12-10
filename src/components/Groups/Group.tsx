@@ -1,3 +1,4 @@
+import React from "react";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import GroupModel from "../../models/GroupModel";
@@ -42,7 +43,7 @@ const Group = () => {
     fetchGroup()
   }
   return (
-    <div>
+    <div className="posts" >
       <h1>{group?.name}</h1>
       <h4>{group?.tags}</h4>
       <p>Posts</p>
@@ -50,8 +51,14 @@ const Group = () => {
         console.log(p)
         return <Post p={p} groupId={group.id} />
       })}
-      <input type="text" placeholder="Your post" onChange={handlePostChange} />
-      <button onClick={handleSendPost} >Send</button>
+      {/* <input type="text" placeholder="Your post" /> */}
+      <div className="input-group mt-2 mb-2">
+        <div className="input-group-prepend">
+          <span className="input-group-text">📜</span>
+        </div>
+        <textarea onChange={handlePostChange} className="form-control " aria-label="With textarea"></textarea>
+      </div>
+      <a href="#" onClick={handleSendPost} className="btn btn-primary btn-block">Add new post 🖋</a>
     </div>
   )
 }

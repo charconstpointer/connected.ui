@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { lv } from "../../validators/LoginValidator";
 import LoginRequest from '../../requests/LoginRequest'
+import React from "react";
 
 const Login = (props: any) => {
   console.log(props.logged)
@@ -52,10 +53,10 @@ const Login = (props: any) => {
             <input type="text" onChange={handleLoginChange} />
             <input type="password" onChange={handlePasswordChange} />
           </form>
-          <button onClick={handleLogin} >Register</button>
+          <button className="btn btn-primary" onClick={handleLogin} >Login</button>
         </>
         :
-        <button onClick={handleLogout}>Logout</button>
+        <button className="btn btn-warning" onClick={handleLogout}>Logout</button>
       }
     </div>
   )

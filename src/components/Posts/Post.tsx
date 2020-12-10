@@ -1,3 +1,4 @@
+import React from "react";
 import { useState } from "react";
 import CreateNewPostComment from "../../requests/CreateNewPostComment";
 import Comment from './Comment'
@@ -26,14 +27,19 @@ const Post = (props: any) => {
 
   }
   return (
-    <div key={props.p.id}>
+    <div className="post mt-2 mb-2" key={props.p.id}>
       <p>Author : {props.p.poster.username}</p>
       <p>Content : {props.p.body}</p>
       <p>Posted at : {props.p.postDate}</p>
-      <p>Comments </p>
       <Comment comments={props.p.comments} />
-      <input type="text" placeholder="Your post" onChange={handlePostChange} />
-      <button onClick={handleSendPost} >Send</button>
+      <div className="input-group mt-2 mb-2">
+        <div className="input-group-prepend">
+          <span className="input-group-text">🤔</span>
+        </div>
+        <textarea onChange={handlePostChange} placeholder="Your comment" className="form-control " aria-label="With textarea"></textarea>
+      </div>
+      {/* <input type="text" placeholder="Your post" onChange={handlePostChange} /> */}
+      <button className="btn btn-primary btn-block" onClick={handleSendPost} >Add comment</button>
     </div >
 
   )

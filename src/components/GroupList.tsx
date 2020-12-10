@@ -21,7 +21,7 @@ const GroupList = (props: any) => {
         </div>
 
 
-        <input type="text" className="form-control" placeholder="Search by keywords or tags" aria-label="Search"
+        <input type="text" className="form-control" onChange={handleSearchChange} placeholder="Search by keywords or tags" aria-label="Search"
           aria-describedby="basic-addon1" />
       </div>
 
