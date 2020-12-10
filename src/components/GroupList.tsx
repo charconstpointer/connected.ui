@@ -25,20 +25,15 @@ const GroupList = (props: any) => {
           aria-describedby="basic-addon1" />
       </div>
 
-      <ul className="groups-list">
+      <ul className="list-group list-group-flush">
         {props.groups.filter((g: GroupModel) => g.name.includes(search)).map((g: GroupModel) => {
           return (
-            <li>
-              <a href="#" key={g.id} className="list-group-item list-group-item-action">{g.name}
-                {/* <p className="badge badge-success">3 Online</p> */}
-                <button className="btn btn-primary" onClick={() => handleJoinGroup(g.id)}  >Join group</button>
-              </a>
+            <li className="list-group-item">
+              <p>{g.name}</p>
+              <button className="btn btn-primary" onClick={() => handleJoinGroup(g.id)}  >Join group</button>
             </li>
           )
         })}
-        {/* <li><a href="#collapse1" data-toggle="collapse" className="list-group-item list-group-item-action">Niderlandzki ster ⚓<span className="badge badge-success">3 Online</span></a></li>
-                <li><a href="#collapse1" data-toggle="collapse" className="list-group-item list-group-item-action">dotnet folks 🖥<span className="badge badge-success">23 Online</span></a></li>
-                <li><a href="#collapse1" data-toggle="collapse" className="list-group-item list-group-item-action">PHP therapy group 🏥<span className="badge badge-success">33 Online</span></a></li> */}
       </ul>
     </div >
   )
