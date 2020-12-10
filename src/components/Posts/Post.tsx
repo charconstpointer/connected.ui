@@ -27,10 +27,18 @@ const Post = (props: any) => {
 
   }
   return (
-    <div className="post mt-2 mb-2" key={props.p.id}>
-      <p>Author : {props.p.poster.username}</p>
-      <p>Content : {props.p.body}</p>
-      <p>Posted at : {props.p.postDate}</p>
+    <div className="container mt-5">
+      <div className="row mb-3">
+        <div className="col">
+          {props.p.poster.username}
+        </div>
+        <div className="col-8">
+          {props.p.body}
+        </div>
+        <div className="col-2">
+          {props.p.postDate.substring(0, 10)}
+        </div>
+      </div>
       <Comment comments={props.p.comments} />
       <div className="input-group mt-2 mb-2">
         <div className="input-group-prepend">
@@ -38,10 +46,8 @@ const Post = (props: any) => {
         </div>
         <textarea onChange={handlePostChange} placeholder="Your comment" className="form-control " aria-label="With textarea"></textarea>
       </div>
-      {/* <input type="text" placeholder="Your post" onChange={handlePostChange} /> */}
       <button className="btn btn-primary btn-block" onClick={handleSendPost} >Add comment</button>
-    </div >
-
+    </div>
   )
 }
 

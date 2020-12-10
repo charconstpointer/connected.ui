@@ -44,9 +44,11 @@ const Group = () => {
   }
   return (
     <div className="posts" >
-      <h1>{group?.name}</h1>
-      <h4>{group?.tags}</h4>
-      <p>Posts</p>
+      <h1 className="display-3 pb-2 pt-5">{group?.name}</h1>
+      {group?.tags.map(t => <span className="badge badge-secondary">{t} </span>)}
+
+
+      {group?.posts.length === 0 ? <p>no posts</p> : null}
       {group?.posts.map((p: PostModel) => {
         console.log(p)
         return <Post p={p} groupId={group.id} />
