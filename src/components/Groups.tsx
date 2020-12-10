@@ -8,6 +8,7 @@ export const Groups = () => {
   const [groupName, setGroupName] = useState("");
   const [description, setDescription] = useState("");
   const [groups, setGroups] = useState<GroupModel[]>([]);
+  const [fetched, setFetched] = useState(false);
 
   useEffect(() => {
     const fetchGroups = async () => {
@@ -20,7 +21,8 @@ export const Groups = () => {
       console.log(data);
 
       const gs = data.map((gr: any) => fromJson(gr))
-      setGroups(g => [...g, ...gs])
+      setGroups(g => [...gs])
+      setFetched(true)
       console.log(groups)
     }
     fetchGroups()
@@ -51,11 +53,16 @@ export const Groups = () => {
 
   return (
     <div>
-      {groups.length > 0 ?
-        <GroupList groups={groups} />
-        :
-        <p>nope</p>
+      {!fetched ?
+        <div className="spinner-border" role="status">
+          <span className="sr-only">Loading...</span>
+        </div> : groups.length > 0 ?
+          <GroupList groups={groups} />
+          :
+          <p>nope</p>
+
       }
+
 
       <div className="create-group mt-5 shadow-sm p-3 mb-5 bg-white rounded">
         <p className="lead">Nothing that suits your interests? Create your own group!</p>

@@ -9,7 +9,6 @@ const GroupList = (props: any) => {
     setSearch(e.target.value)
   }
   const handleJoinGroup = (groupId: number) => {
-    console.log(groupId)
     history.push(`/groups/${groupId}`)
   }
   return (
@@ -18,8 +17,6 @@ const GroupList = (props: any) => {
         <div className="input-group-prepend">
           <span className="input-group-text" id="basic-addon1">🔍</span>
         </div>
-
-
         <input type="text" className="form-control" onChange={handleSearchChange} placeholder="Search by keywords or tags" aria-label="Search"
           aria-describedby="basic-addon1" />
       </div>
