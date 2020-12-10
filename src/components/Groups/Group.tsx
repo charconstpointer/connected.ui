@@ -21,6 +21,7 @@ const Group = () => {
     setGroup(g);
   }
   useEffect(() => {
+    console.log(localStorage.getItem("username"))
     fetchGroup();
   }, []);
   const [post, setPost] = useState<string>();

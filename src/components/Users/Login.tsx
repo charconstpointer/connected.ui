@@ -2,6 +2,7 @@ import { useState } from "react";
 import { lv } from "../../validators/LoginValidator";
 import LoginRequest from '../../requests/LoginRequest'
 import React from "react";
+import { Post as POST } from "../../utils/api";
 
 const Login = (props: any) => {
   console.log(props.logged)
@@ -27,13 +28,18 @@ const Login = (props: any) => {
       console.error("nope!")
     }
     const request = new LoginRequest(login, password, email);
-    const response = await fetch("https://localhost:5001/auth", {
-      method: "POST",
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(request)
-    });
+    const response = await POST("https://localhost:5001/auth", request);
+    if (!response.ok) {
+      console.error("could not login");
+      return;
+    }
+    // const response = await fetch("https://localhost:5001/auth", {
+    //   method: "POST",
+    //   headers: {
+    //     'Content-Type': 'application/json'
+    //   },
+    //   body: JSON.stringify(request)
+    // });
     const token = await response.text();
     localStorage.setItem("token", token);
     localStorage.setItem("username", login);
