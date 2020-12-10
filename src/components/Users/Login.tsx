@@ -36,7 +36,8 @@ const Login = (props: any) => {
     });
     const token = await response.text();
     localStorage.setItem("token", token);
-    console.log("logged in")
+    localStorage.setItem("username", login);
+    console.log("logged in as", login)
     setIsLoggedIn(true)
   }
 
@@ -50,13 +51,39 @@ const Login = (props: any) => {
       {!isLoggedIn ?
         <>
           <form>
-            <input type="text" onChange={handleLoginChange} />
-            <input type="password" onChange={handlePasswordChange} />
+            <div className="container">
+              <div className="row mt-1">
+                <div className="input-group mb-1">
+                  <div className="input-group-prepend">
+                    <span className="input-group-text" id="basic-addon1">Login</span>
+                  </div>
+                  <input type="text" onChange={handleLoginChange} className="form-control" placeholder="" aria-label="Username"
+                    aria-describedby="basic-addon1" />
+                </div>
+              </div>
+              <div className="row">
+                <div className="input-group mb-1">
+                  <div className="input-group-prepend">
+                    <span className="input-group-text" id="basic-addon1">Password</span>
+                  </div>
+                  <input type="password" onChange={handlePasswordChange} className="form-control" placeholder="" aria-label="Username"
+                    aria-describedby="basic-addon1" />
+                </div>
+              </div>
+            </div>
           </form>
-          <button className="btn btn-primary" onClick={handleLogin} >Login</button>
+          <button className="btn btn-primary btn-block" onClick={handleLogin} >Login</button>
         </>
         :
-        <button className="btn btn-warning" onClick={handleLogout}>Logout</button>
+        <div className="container">
+          <div className="row">
+            <p>Hey {localStorage.getItem("username")}</p>
+          </div>
+          <div className="row">
+            <button className="btn btn-warning" onClick={handleLogout}>Logout</button>
+          </div>
+        </div>
+
       }
     </div>
   )

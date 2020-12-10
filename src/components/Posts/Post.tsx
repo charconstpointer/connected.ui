@@ -27,16 +27,19 @@ const Post = (props: any) => {
 
   }
   return (
-    <div className="container mt-5">
-      <div className="row mb-3">
-        <div className="col">
-          {props.p.poster.username}
+    <div className="container mt-5 shadow p-3 mb-5 bg-white rounded">
+      <div className="post mt-5 shadow-sm p-3 mb-5 bg-white rounded">
+        <div className="row">
+          <div className="col-sm-1"> <span className="">{props.p.poster.username}</span>
+          </div>
+          <div className="col"><span>{props.p.postDate.substring(0, 10)}</span></div>
         </div>
-        <div className="col-8">
-          {props.p.body}
-        </div>
-        <div className="col-2">
-          {props.p.postDate.substring(0, 10)}
+        <div className="row">
+          <div className="col mt-1 mb-1">
+            <span>
+              {props.p.body}
+            </span>
+          </div>
         </div>
       </div>
       <Comment comments={props.p.comments} />
@@ -47,7 +50,7 @@ const Post = (props: any) => {
         <textarea onChange={handlePostChange} placeholder="Your comment" className="form-control " aria-label="With textarea"></textarea>
       </div>
       <button className="btn btn-primary btn-block" onClick={handleSendPost} >Add comment</button>
-    </div>
+    </div >
   )
 }
 

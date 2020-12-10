@@ -46,11 +46,37 @@ const Register = (props: any) => {
       {!isLoggedIn ?
         <>
           <form>
-            <input type="text" onChange={handleLoginChange} />
-            <input type="password" onChange={handlePasswordChange} />
-            <input type="email" onChange={handleEmailChange} />
+            <div className="container">
+              <div className="row mt-1">
+                <div className="input-group mb-1">
+                  <div className="input-group-prepend">
+                    <span className="input-group-text" id="basic-addon1">Login</span>
+                  </div>
+                  <input type="text" onChange={handleLoginChange} className="form-control" placeholder="" aria-label="Username"
+                    aria-describedby="basic-addon1" />
+                </div>
+              </div>
+              <div className="row">
+                <div className="input-group mb-1">
+                  <div className="input-group-prepend">
+                    <span className="input-group-text" id="basic-addon1">Password</span>
+                  </div>
+                  <input type="password" onChange={handlePasswordChange} className="form-control" placeholder="" aria-label="Password"
+                    aria-describedby="basic-addon1" />
+                </div>
+              </div>
+              <div className="row">
+                <div className="input-group mb-1">
+                  <div className="input-group-prepend">
+                    <span className="input-group-text" id="basic-addon1">Email</span>
+                  </div>
+                  <input type="email" onChange={handleEmailChange} className="form-control" placeholder="" aria-label="Email"
+                    aria-describedby="basic-addon1" />
+                </div>
+              </div>
+            </div>
           </form>
-          <button className="btn btn-primary" onClick={handleRegister} >Register</button>
+          <button className="btn btn-primary btn-block" onClick={handleRegister} >Register</button>
         </> : <p>Please logout first to create another account</p>}
     </div>
   )

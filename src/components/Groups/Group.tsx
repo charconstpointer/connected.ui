@@ -53,7 +53,6 @@ const Group = () => {
         console.log(p)
         return <Post p={p} groupId={group.id} />
       })}
-      {/* <input type="text" placeholder="Your post" /> */}
       <div className="input-group mt-2 mb-2">
         <div className="input-group-prepend">
           <span className="input-group-text">📜</span>
