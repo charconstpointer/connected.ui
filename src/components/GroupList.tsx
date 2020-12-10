@@ -1,6 +1,5 @@
-import { group } from "console";
-import React, { useState } from "react"
-import { Redirect, useHistory } from "react-router-dom";
+import { useState } from "react"
+import { useHistory } from "react-router-dom";
 import GroupModel from '../models/GroupModel'
 
 const GroupList = (props: any) => {
