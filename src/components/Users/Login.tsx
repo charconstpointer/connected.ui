@@ -3,7 +3,7 @@ import { lv } from "../../validators/LoginValidator";
 import LoginRequest from '../../requests/LoginRequest'
 import React from "react";
 import { Post as POST } from "../../utils/api";
-
+import { Validator } from '../../validators/Validator'
 const Login = (props: any) => {
   console.log(props.logged)
   const [login, setLogin] = useState("");
@@ -27,19 +27,19 @@ const Login = (props: any) => {
     if (!isValid) {
       console.error("nope!")
     }
+
     const request = new LoginRequest(login, password, email);
+    const v = new Validator();
+    const errors = v
+      .addStep<LoginRequest>(r => r.password.length > 5 && r.password.includes("*"), "password should be longer than 5 and contain at least one special character")
+      .addStep<LoginRequest>(r => r.username.length > 5, "login should be longer than 5 characters")
+      .validate(request);
+    console.log(errors);
     const response = await POST("https://localhost:5001/auth", request);
     if (!response.ok) {
       console.error("could not login");
       return;
     }
-    // const response = await fetch("https://localhost:5001/auth", {
-    //   method: "POST",
-    //   headers: {
-    //     'Content-Type': 'application/json'
-    //   },
-    //   body: JSON.stringify(request)
-    // });
     const token = await response.text();
     localStorage.setItem("token", token);
     localStorage.setItem("username", login);
