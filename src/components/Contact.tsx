@@ -23,20 +23,9 @@ const Contact = () => {
           <a href="#" className="btn btn-primary btn-block mt-1">Send</a>
         </div>
       </div>
-      <div className="container row mt-5 ">
-        <div className="col">
-          <p className="lead">Our location</p>
-        </div>
-        <div className="col">
-          <ul>
-            <li><p>Poland</p></li>
-            <li><p>Warsaw 02-008</p></li>
-            <li><p>Koszykowa 86</p></li>
-          </ul>
-        </div>
-      </div>
+
       <div className="row mt-5">
-        <div className="col-sm-6 col-info">
+        <div className="col">
           <ul className="list-group-flush mb-5">
             <li className="list-group-item d-flex justify-content-between">
               <svg width="2em" height="2em" viewBox="0 0 16 16" className="bi bi-telephone-fill" fill="currentColor"
@@ -70,37 +59,30 @@ const Contact = () => {
           </ul>
 
         </div>
-        <div className="col-sm-6">
-          <ul className="nav navbar-nav list-group-flush mb-5 pl-5" >
-            {/* style="flex:1" ^*/}
-            <li className=" nav-item">
-              <p className="lead">Working hours</p>
-            </li>
-            <li className=" nav-item">
-              <p>Monday : 8:00 - 21:00</p>
-            </li>
-            <li className="nav-item">
-              <p>Monday : 8:00 - 21:00</p>
-            </li>
-            <li className="nav-item">
-              <p>Monday : 8:00 - 21:00</p>
-            </li>
-            <li className="nav-item">
-              <p>Monday : 8:00 - 21:00</p>
-            </li>
-            <li className="nav-item">
-              <p>Monday : 8:00 - 21:00</p>
-            </li>
-            <li className="nav-item">
-              <p>Monday : 8:00 - 21:00</p>
-            </li>
-            <li className="nav-item">
-              <p>Monday : 8:00 - 21:00</p>
-            </li>
+        <div className="col-6">
+          <div className="container">
+            <div className="row">
+              <div className="col">Mon - Fri</div>
+              <div className="col">🕖 : 08:00</div>
+              <div className="col">🕓 : 16:00</div>
+            </div>
+          </div>
+        </div>
+        {/* <div className="row mt-5 "> */}
+        <div className="col ">
+          <p className="lead">Our location</p>
+
+
+          <ul>
+            <li><p>Poland</p></li>
+            <li><p>Warsaw 02-008</p></li>
+            <li><p>Koszykowa 86</p></li>
           </ul>
         </div>
 
+
       </div>
+      {/* </div> */}
     </div>
   )
 }
