@@ -1,7 +1,7 @@
 import React, { useState } from "react"
 import Register from './Users/Register'
 import Login from './Users/Login'
-
+import UserView from './Users/UserView'
 const UserPanel = () => {
   const [token, setToken] = useState(localStorage.getItem("token"));
   const [isLoggedIn, setIsLoggedIn] = useState(token!?.length > 0);
@@ -9,6 +9,11 @@ const UserPanel = () => {
   const [tab, setTab] = useState(0);
   const handleChangeTab = (tab: number) => {
     setTab(tab);
+  }
+  if (isLoggedIn) {
+    return (
+      <UserView username={localStorage.getItem("username")} />
+    )
   }
   return (
     <div>
