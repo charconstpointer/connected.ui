@@ -1,11 +1,12 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { lv } from "../../validators/LoginValidator";
 import LoginRequest from '../../requests/LoginRequest'
 import React from "react";
 import { Post as POST } from "../../utils/api";
 import { Validator } from '../../validators/Validator'
-
+import ErrorDisplay from '../Errors/ErrorDisplay'
 import { FormState } from '../../validators/FormState'
+
 const Login = (props: any) => {
   console.log(props.logged)
   const [login, setLogin] = useState("");
@@ -15,6 +16,9 @@ const Login = (props: any) => {
   const [formState, setFormState] = useState<FormState>(FormState.Empty);
   const [isLoggedIn, setIsLoggedIn] = useState(token!?.length > 0);
   const [errors, setErrors] = useState<Array<string>>();
+  const validator = new Validator()
+    .addStep<LoginRequest>(r => r.password.length > 5 && r.password.includes("*"), "password should be longer than 5 and contain at least one special character")
+    .addStep<LoginRequest>(r => r.username.length > 5, "login should be longer than 5 characters")
 
   const handleLoginChange = (e: any) => {
     setFormState(FormState.NotValidated)
@@ -35,14 +39,15 @@ const Login = (props: any) => {
     }
 
     const request = new LoginRequest(login, password, email);
-    const v = new Validator();
-    const errors = v
-      .addStep<LoginRequest>(r => r.password.length > 5 && r.password.includes("*"), "password should be longer than 5 and contain at least one special character")
-      .addStep<LoginRequest>(r => r.username.length > 5, "login should be longer than 5 characters")
+
+    const errors = validator
       .validate(request);
 
     errors.ok ? setFormState(FormState.Valid) : setFormState(FormState.Invalid);
-    setErrors(errors.errors.map(e => e.reason))
+    setErrors(errors.errors.filter((e: any) => {
+      console.log(e, !e.success)
+      return !e.success
+    }).map(e => e.reason))
     const response = await POST("https://localhost:5001/auth", request);
     if (!response.ok) {
       console.error("could not login");
@@ -62,23 +67,12 @@ const Login = (props: any) => {
   }
   let alert = undefined;
   if (formState === FormState.Invalid) {
-    alert = (
-      errors?.map(e => {
-        return (
-          <div key={e} className="col-12">
-            <div className="alert alert-danger" role="alert">
-              {e}
-            </div>
-          </div>
-        )
-      })
-    )
+    alert = <ErrorDisplay errors={errors} />
   }
   return (
     <div className="container">
       {!isLoggedIn ?
         <>
-
           <div className="row">
             <form>
               <div className="container">

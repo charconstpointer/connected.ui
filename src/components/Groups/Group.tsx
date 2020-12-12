@@ -6,13 +6,15 @@ import PostModel, { postFromJson } from "../../models/PostModel";
 import CreateNewPost from '../../requests/CreateNewPost'
 import { Post as POST } from "../../utils/api";
 import Post from '../Posts/Post'
-
+import { Validator } from '../../validators/Validator'
 const Group = () => {
   let params: any = useParams();
   const [group, setGroup] = useState<GroupModel>();
   const [token, setToken] = useState(localStorage.getItem("token"));
+  const [errors, setErrors] = useState<Array<string>>([]);
 
   const id = params.id;
+
   const fetchGroup = async () => {
     const response = await fetch(`https://localhost:5001/groups/${id}`)
     const data = await response.json();
