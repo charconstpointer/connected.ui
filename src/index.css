@@ -67,3 +67,8 @@ ul {
   text-align: center;
   flex-flow: column; */
 }
+
+.avatar{
+  max-width: 5em;
+  max-height: 5em;
+}
