@@ -1,7 +1,6 @@
-import React from "react";
 import { useState } from "react";
 import CreateNewPostComment from "../../requests/CreateNewPostComment";
-import Comment from './Comment'
+
 
 const Post = (props: any) => {
   const [token, setToken] = useState(localStorage.getItem("token"));
@@ -11,7 +10,6 @@ const Post = (props: any) => {
     setPost(e.target.value)
   }
   const handleSendPost = async () => {
-    console.log("post")
     const response = await fetch(`https://localhost:5001/groups/${props.groupId}/posts/${props.p.id}/comments`, {
       method: "POST",
       headers: {
@@ -42,7 +40,20 @@ const Post = (props: any) => {
           </div>
         </div>
       </div>
-      <Comment comments={props.p.comments} />
+      <div className="container comments shadow-sm p-3 mb-5 bg-white rounded">
+        <div className="row">
+          <div className="col">
+            <h5>Comments 📖</h5>
+          </div>
+        </div>
+        <ul className="list-group list-group-flush">
+          {props.p.comments.map((c: any) => {
+            return (
+              <li className="list-group-item" key={props.p.comments.indexOf(c)}>{c.content}</li>
+            )
+          })}
+        </ul>
+      </div>
       <div className="input-group mt-2 mb-2">
         <div className="input-group-prepend">
           <span className="input-group-text">🤔</span>

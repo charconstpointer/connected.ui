@@ -7,12 +7,29 @@ const UserPanel = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(token!?.length > 0);
   console.log(token, isLoggedIn)
   const [tab, setTab] = useState(0);
+
   const handleChangeTab = (tab: number) => {
     setTab(tab);
   }
+
+  const handleLogout = () => {
+    setIsLoggedIn(false);
+    localStorage.setItem("token", "")
+    console.log(localStorage.getItem("token"))
+  }
+
   if (isLoggedIn) {
     return (
-      <UserView username={localStorage.getItem("username")} />
+      <div className="container">
+        <UserView username={localStorage.getItem("username")} />
+        <div className="row">
+          <p>Hey {localStorage.getItem("username")}</p>
+        </div>
+        <div className="row">
+          <button className="btn btn-warning" onClick={handleLogout}>Logout</button>
+        </div>
+      </div>
+
     )
   }
   return (
