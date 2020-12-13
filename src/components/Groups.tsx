@@ -10,21 +10,21 @@ export const Groups = () => {
   const [groups, setGroups] = useState<GroupModel[]>([]);
   const [fetched, setFetched] = useState(false);
 
+  const fetchGroups = async () => {
+    console.log('uef')
+
+    const response = await fetch("https://localhost:5001/groups")
+    console.log(response);
+
+    const data = await response.json();
+    console.log(data);
+
+    const gs = data.map((gr: any) => fromJson(gr))
+    setGroups(g => [...gs])
+    setFetched(true)
+    console.log(groups)
+  }
   useEffect(() => {
-    const fetchGroups = async () => {
-      console.log('uef')
-
-      const response = await fetch("https://localhost:5001/groups")
-      console.log(response);
-
-      const data = await response.json();
-      console.log(data);
-
-      const gs = data.map((gr: any) => fromJson(gr))
-      setGroups(g => [...gs])
-      setFetched(true)
-      console.log(groups)
-    }
     fetchGroups()
   }, [])
 
@@ -46,8 +46,9 @@ export const Groups = () => {
       },
       body: JSON.stringify(request)
     })
+
     if (response.status !== 500) {
-      setGroups(groups => [...groups, fromJson(request)]);
+      fetchGroups()
     }
   }
 
