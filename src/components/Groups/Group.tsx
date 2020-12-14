@@ -7,6 +7,7 @@ import CreateNewPost from '../../requests/CreateNewPost'
 import { Post as POST } from "../../utils/api";
 import Post from '../Posts/Post'
 import { Validator } from '../../validators/Validator'
+import { isLoggedIn } from "../../utils/logged";
 const Group = () => {
   let params: any = useParams();
   const [group, setGroup] = useState<GroupModel>();
@@ -39,7 +40,7 @@ const Group = () => {
     fetchGroup()
   }
   return (
-    <div className="posts" >
+    <div className="container posts" >
       <h1 className="display-3 pb-2 pt-5">{group?.name}</h1>
       {group?.tags.map(t => <span className="badge badge-secondary">{t} </span>)}
       {group?.posts.length === 0 ? <p>no posts</p> : null}
@@ -47,13 +48,17 @@ const Group = () => {
         console.log(p)
         return <Post p={p} groupId={group.id} />
       })}
-      <div className="input-group mt-2 mb-2">
-        <div className="input-group-prepend">
-          <span className="input-group-text">📜</span>
+      {isLoggedIn() ? <div className="row">
+        <div className="input-group mt-2 mb-2">
+          <div className="input-group-prepend">
+            <span className="input-group-text">📜</span>
+          </div>
+          <textarea onChange={handlePostChange} className="form-control " aria-label="With textarea"></textarea>
         </div>
-        <textarea onChange={handlePostChange} className="form-control " aria-label="With textarea"></textarea>
-      </div>
-      <a href="#" onClick={handleSendPost} className="btn btn-primary btn-block">Add new post 🖋</a>
+        <a href="#" onClick={handleSendPost} className="btn btn-primary btn-block">Add new post 🖋</a>
+
+      </div> : null
+      }
     </div>
   )
 }
