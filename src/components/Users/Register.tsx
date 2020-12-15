@@ -3,12 +3,19 @@ import { useState } from "react";
 import RegisterRequest from "../../requests/RegisterRequest";
 import { isLoggedIn } from "../../utils/logged";
 import { v } from "../../validators/RegistrationValidator";
+import { Validator } from "../../validators/Validator";
+import ErrorDisplay from "../Errors/ErrorDisplay";
 
 const Register = (props: any) => {
   const [login, setLogin] = useState("");
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
-
+  const [errors, setErrors] = useState<string[]>([]);
+  const validator = new Validator()
+    .addStep<RegisterRequest>(r => r.email.trim().length > 0, "email cannot be empty")
+    .addStep<RegisterRequest>(r => r.username.trim().length > 0, "userame cannot be empty")
+    .addStep<RegisterRequest>(r => r.password.trim().length > 5, "password must be longer than 5 characters")
+    .addStep<RegisterRequest>(r => r.password.includes("*"), "password must contain *")
   const handleLoginChange = (e: any) => {
     setLogin(e.target.value)
   }
@@ -19,12 +26,13 @@ const Register = (props: any) => {
     setEmail(e.target.value)
   }
   const handleRegister = async () => {
-    const isValid = v.validate(login, password, email);
-    if (!isValid) {
-      console.error("nope!");
+    const request = new RegisterRequest(login, password, email);
+    const validationResult = validator.validate(request);
+    if (!validationResult.ok) {
+      setErrors([...errors, ...validationResult.errors.map(e => e.reason)])
+      return
     }
 
-    const request = new RegisterRequest(login, password, email);
     const response = await fetch("https://localhost:5001/users", {
       method: "POST",
       headers: {
@@ -34,9 +42,8 @@ const Register = (props: any) => {
     })
     console.log(response.status)
     if (response.status !== 201) {
-      console.error("something went wrong")
+      setErrors([...errors, ...validationResult.errors.map(e => e.reason)])
     }
-
   }
   return (
     <>
@@ -74,6 +81,7 @@ const Register = (props: any) => {
             </div>
           </form>
           <button className="btn btn-primary btn-block" onClick={handleRegister} >Register</button>
+          <ErrorDisplay errors={errors} />
         </> : <p>Please logout first to create another account</p>}
     </>
   )
