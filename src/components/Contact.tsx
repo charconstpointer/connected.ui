@@ -1,6 +1,33 @@
-import React from "react"
+import React, { useState } from "react"
+import { Validator } from "../validators/Validator";
+import ErrorDisplay from "./Errors/ErrorDisplay";
 
 const Contact = () => {
+  const [errors, setErrors] = useState<string[]>([]);
+  const [message, setMessage] = useState("");
+  const [author, setAuthor] = useState("");
+  const validator = new Validator().addStep<string>(c => c.trim().length > 0, "value cannot be empty or all whitespace");
+  const handleSendForm = () => {
+    console.log(author, message)
+    const messageValidation = validator.validate(message);
+    if (!messageValidation.ok) {
+      setErrors([...errors, ...messageValidation.errors.map(e => e.reason)])
+    }
+    const authorValidation = validator.validate(author);
+    if (!authorValidation.ok) {
+      setErrors([...errors, ...authorValidation.errors.map(e => e.reason)])
+    }
+    if (!messageValidation.ok || !authorValidation.ok) {
+      return
+    }
+    setErrors([])
+  }
+  const handleAuthorChange = (e: any) => {
+    setAuthor(e.target.value)
+  }
+  const handleMessageChange = (e: any) => {
+    setMessage(e.target.value)
+  }
   return (
     <div className="container">
       <div className="row mb-5 justify-content-start">
@@ -11,19 +38,19 @@ const Contact = () => {
           <div className="input-group-prepend">
             <span className="input-group-text">Send us a message!</span>
           </div>
-          <textarea className="form-control" aria-label="With textarea"></textarea>
+          <textarea className="form-control" onChange={handleMessageChange} aria-label="With textarea"></textarea>
         </div>
         <div className="input-group mt-1 mb-5">
           <div className="input-group-prepend">
             <span className="input-group-text" id="basic-addon1">Name</span>
           </div>
-          <input type="text" className="form-control" placeholder="Your name" aria-label="Username"
+          <input type="text" className="form-control" onChange={handleAuthorChange} placeholder="Your name" aria-label="Username"
             aria-describedby="basic-addon1">
           </input>
-          <a href="#" className="btn btn-primary btn-block mt-1">Send</a>
+          <a href="#" onClick={handleSendForm} className="btn btn-primary btn-block mt-1">Send</a>
         </div>
+        <ErrorDisplay errors={errors} />
       </div>
-
       <div className="row mt-5">
         <div className="col">
           <ul className="list-group-flush mb-5">
@@ -55,34 +82,93 @@ const Contact = () => {
               <span>WhatsApp</span>
               <span>321-321-321</span>
             </li>
-
           </ul>
-
         </div>
         <div className="col-6">
           <div className="container">
-            <div className="row">
-              <div className="col">Mon - Fri</div>
-              <div className="col">🕖 : 08:00</div>
-              <div className="col">🕓 : 16:00</div>
-            </div>
+            <ul>
+              <li>
+                <div className="row">
+                  <div className="col">
+                    Monday
+                  </div>
+                  <div className="col">
+                    08:00 - 16:00
+                  </div>
+                </div>
+              </li>
+              <li>
+                <div className="row">
+                  <div className="col">
+                    Wednesday
+                  </div>
+                  <div className="col">
+                    08:00 - 16:00
+                  </div>
+                </div>
+              </li>
+              <li>
+                <div className="row">
+                  <div className="col">
+                    Tuesday
+                  </div>
+                  <div className="col">
+                    08:00 - 16:00
+                  </div>
+                </div>
+              </li>
+              <li>
+                <div className="row">
+                  <div className="col">
+                    Thursday
+                  </div>
+                  <div className="col">
+                    08:00 - 16:00
+                  </div>
+                </div>
+              </li>
+              <li>
+                <div className="row">
+                  <div className="col-md">
+                    Friday
+                  </div>
+                  <div className="col">
+                    08:00 - 16:00
+                  </div>
+                </div>
+              </li>
+              <li>
+                <div className="row">
+                  <div className="col-md">
+                    Saturday
+                  </div>
+                  <div className="col">
+                    08:00 - 16:00
+                  </div>
+                </div>
+              </li>
+              <li>
+                <div className="row">
+                  <div className="col-md">
+                    Sunday
+                  </div>
+                  <div className="col">
+                    08:00 - 16:00
+                  </div>
+                </div>
+              </li>
+            </ul>
           </div>
         </div>
-        {/* <div className="row mt-5 "> */}
         <div className="col ">
           <p className="lead">Our location</p>
-
-
           <ul>
             <li><p>Poland</p></li>
             <li><p>Warsaw 02-008</p></li>
             <li><p>Koszykowa 86</p></li>
           </ul>
         </div>
-
-
       </div>
-      {/* </div> */}
     </div>
   )
 }
