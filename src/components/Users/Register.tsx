@@ -16,6 +16,7 @@ const Register = (props: any) => {
     .addStep<RegisterRequest>(r => r.username.trim().length > 0, "userame cannot be empty")
     .addStep<RegisterRequest>(r => r.password.trim().length > 5, "password must be longer than 5 characters")
     .addStep<RegisterRequest>(r => r.password.includes("*"), "password must contain *")
+    
   const handleLoginChange = (e: any) => {
     setLogin(e.target.value)
   }
@@ -26,6 +27,7 @@ const Register = (props: any) => {
     setEmail(e.target.value)
   }
   const handleRegister = async () => {
+    setErrors([])
     const request = new RegisterRequest(login, password, email);
     const validationResult = validator.validate(request);
     if (!validationResult.ok) {
