@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import CreateNewPostComment from "../../requests/CreateNewPostComment";
 import { isLoggedIn, getToken } from "../../utils/logged";
 
@@ -21,13 +22,13 @@ const Post = (props: any) => {
       console.error("nope!")
       return
     }
-
   }
   return (
     <div className="container mt-5 shadow p-3 mb-5 bg-white rounded">
-      <div className="post mt-5 shadow-sm p-3 mb-5 bg-white rounded">
-        <div className="row">
-          <div className="col-2"> <span className="">{props.p.poster.username}</span>
+      <div className="post shadow-sm p-3 mb-5 bg-white rounded">
+        <div className="row d-flex justify-content-between">
+          <div className="col">
+            <Link to={`/users/${props.p.poster.username}`} >{props.p.poster.username}</Link>
           </div>
           <div className="col"><span>{props.p.postDate.substring(0, 10)}</span></div>
         </div>
@@ -48,7 +49,16 @@ const Post = (props: any) => {
             <ul className="list-group list-group-flush">
               {props.p.comments.map((c: any) => {
                 return (
-                  <li className="list-group-item" key={props.p.comments.indexOf(c)}>author : {props.p.poster.username} content : {c.content}</li>
+                  <li className="list-group-item" key={props.p.comments.indexOf(c)}>
+                    <div className="container">
+                      <div className="row">
+                        {props.p.poster.username}
+                      </div>
+                      <div className="row">
+                        {c.content}
+                      </div>
+                    </div>
+                  </li>
                 )
               })}
             </ul>
