@@ -34,6 +34,7 @@ const Post = (props: any) => {
 
   return (
     <div className="container mt-5 shadow p-3 mb-5 bg-white rounded">
+
       <div className="post shadow-sm p-3 mb-5 bg-white rounded">
         <div className="row d-flex justify-content-between">
           <div className="col">

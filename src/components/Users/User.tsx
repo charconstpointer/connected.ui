@@ -1,9 +1,13 @@
-const User = () => {
+import { useParams } from "react-router-dom";
+
+const User = (props: any) => {
+  const { username } = useParams<any>();
+
   return (
     <div className="container">
       <div className="row user-info container pb-5 pt-5">
         <img src="../img//avatar.png" alt="" className="avatar rounded-circle img-fluid"></img>
-        <h1 className="display-3 col col-lg-2">foobar</h1>
+        <h1 className="display-3 col col-lg-2">{username}</h1>
       </div>
 
       <div className="row description">
