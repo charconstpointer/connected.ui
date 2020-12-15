@@ -8,11 +8,13 @@ import { Post as POST } from "../../utils/api";
 import Post from '../Posts/Post'
 import { Validator } from '../../validators/Validator'
 import { isLoggedIn } from "../../utils/logged";
+import ErrorDisplay from "../Errors/ErrorDisplay";
+
 const Group = () => {
   let params: any = useParams();
   const [group, setGroup] = useState<GroupModel>();
-  const [token, setToken] = useState(localStorage.getItem("token"));
-  const [errors, setErrors] = useState<Array<string>>([]);
+  const [errors, setErrors] = useState<string[]>([]);
+  const [post, setPost] = useState<string>();
 
   const id = params.id;
 
@@ -23,21 +25,30 @@ const Group = () => {
     const g = new GroupModel(data.id, data.name, data.tags, posts, []);
     setGroup(g);
   }
+
   useEffect(() => {
     console.log(localStorage.getItem("username"))
     fetchGroup();
   }, []);
-  const [post, setPost] = useState<string>();
+
   const handlePostChange = (e: any) => {
     setPost(e.target.value)
   }
+  const validator = new Validator()
+    .addStep<string>(p => p.trim().length > 0, "post cannot be empty or all whitespace")
   const handleSendPost = async () => {
+    const result = validator.validate(post);
+    if (!result.ok) {
+      setErrors([...errors, ...result.errors.map(e => e.reason)])
+      return
+    }
     const response = await POST(`https://localhost:5001/groups/${group?.id}/posts`, new CreateNewPost(post!))
     if (response.status !== 200) {
-      console.error("nope!")
+      setErrors([...errors, "Could not send your post 😭"])
       return
     }
     fetchGroup()
+    setErrors([])
   }
   return (
     <div className="container posts" >
@@ -55,8 +66,8 @@ const Group = () => {
           </div>
           <textarea onChange={handlePostChange} className="form-control " aria-label="With textarea"></textarea>
         </div>
-        <a href="#" onClick={handleSendPost} className="btn btn-primary btn-block">Add new post 🖋</a>
-
+        <button onClick={handleSendPost} className="btn btn-primary btn-block">Add new post 🖋</button>
+        <ErrorDisplay errors={errors} />
       </div> : null
       }
     </div>

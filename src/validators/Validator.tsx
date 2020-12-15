@@ -1,3 +1,5 @@
+import { v } from "./RegistrationValidator";
+
 export class Validator {
   private steps: Array<ValidationStep>;
   constructor() {
@@ -8,6 +10,9 @@ export class Validator {
     return this;
   }
   validate<T>(value: T): ValidationResult {
+    if (value === null || value === undefined) {
+      return ValidationResult.fromErrors([new ValidatorError(false, "value cannot be null or undefined")])
+    }
     const fx = this.steps.map(f => {
       const result = f.f(value)
       return new ValidatorError(result, f.reason);

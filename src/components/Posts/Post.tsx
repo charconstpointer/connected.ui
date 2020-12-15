@@ -2,27 +2,40 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import CreateNewPostComment from "../../requests/CreateNewPostComment";
 import { isLoggedIn, getToken } from "../../utils/logged";
-
+import { Post as POST } from '../../utils/api'
+import { Validator } from "../../validators/Validator";
+import ErrorDisplay from "../Errors/ErrorDisplay";
 
 const Post = (props: any) => {
   const [post, setPost] = useState<string>();
   const handlePostChange = (e: any) => {
     setPost(e.target.value)
   }
+  const [errors, setErrors] = useState<string[]>([]);
+  const validator = new Validator();
+  validator
+    .addStep<string>(c => c.length > 0, "comment cannot be null")
+    .addStep<string>(c => c.trim().length > 0, "comment cant be whitespace")
+
   const handleSendPost = async () => {
-    const response = await fetch(`https://localhost:5001/groups/${props.groupId}/posts/${props.p.id}/comments`, {
-      method: "POST",
-      headers: {
-        'Content-Type': "application/json",
-        'Authorization': `Bearer ${getToken()}`
-      },
-      body: JSON.stringify(new CreateNewPostComment(post!))
-    })
+    if (post === undefined) {
+      console.error("not ok")
+      return
+    }
+    const result = validator.validate(post as string);
+    if (!result.ok) {
+      result.errors.forEach(err => console.error(err.reason))
+      setErrors([...errors, ...result.errors.map(e => e.reason)])
+      return
+    }
+    const response = await POST(`https://localhost:5001/groups/${props.groupId}/posts/${props.p.id}/comments`, new CreateNewPostComment(post!))
     if (response.status !== 200) {
       console.error("nope!")
       return
     }
+    setErrors([])
   }
+
   return (
     <div className="container mt-5 shadow p-3 mb-5 bg-white rounded">
       <div className="post shadow-sm p-3 mb-5 bg-white rounded">
@@ -40,7 +53,7 @@ const Post = (props: any) => {
           </div>
         </div>
       </div>
-      <div className="container comments shadow-sm p-3 mb-5 bg-white rounded">
+      <div className="container comments shadow-sm bg-white rounded">
         <div className="row">
           <div className="col-12 mb-3">
             <h5>Comments 📖</h5>
@@ -72,9 +85,11 @@ const Post = (props: any) => {
             <textarea onChange={handlePostChange} placeholder="Your comment" className="form-control " aria-label="With textarea"></textarea>
           </div>
           <button className="btn btn-primary btn-block" onClick={handleSendPost} >Add comment</button>
+
         </div> : null}
       </div>
 
+      <ErrorDisplay errors={errors} />
     </div >
   )
 }
