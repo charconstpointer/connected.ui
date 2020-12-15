@@ -13,21 +13,7 @@ const UserPanel = () => {
   const handleLogout = () => {
     localStorage.setItem("token", "")
   }
-  // console.log(isLoggedIn())
-  // if (isLoggedIn()) {
-  //   return (
-  //     <div className="container">
-  //       <UserView username={localStorage.getItem("username")} />
-  //       <div className="row">
-  //         <p>Hey {localStorage.getItem("username")}</p>
-  //       </div>
-  //       <div className="row">
-  //         <button className="btn btn-warning" onClick={handleLogout}>Logout</button>
-  //       </div>
-  //     </div>
 
-  //   )
-  // }
   return (
     <div>
       <ul className="nav nav-tabs" >

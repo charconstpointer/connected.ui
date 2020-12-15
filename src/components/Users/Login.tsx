@@ -94,7 +94,7 @@ const Login = (props: any) => {
         <div className="container">
           <div className="row">
             <UserView username={localStorage.getItem("username")} />
-            <button className="btn btn-warning" onClick={handleLogout}>Logout</button>
+            <button className="btn btn-warning btn-block mt-3" onClick={handleLogout}>Logout</button>
           </div>
         </div>
 

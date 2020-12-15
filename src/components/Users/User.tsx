@@ -30,7 +30,7 @@ const User = (props: any) => {
           </ul>
         </div>
         <div className="col-6">
-          <div className="user-info">
+          <div className="container user-info">
             <p className="display-4">Contact info</p>
             <ul className="list-group list-group-flush mt-5">
               <li className="list-group-item">
