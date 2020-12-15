@@ -1,16 +1,13 @@
 import React from "react";
 import { useState } from "react";
 import RegisterRequest from "../../requests/RegisterRequest";
+import { isLoggedIn } from "../../utils/logged";
 import { v } from "../../validators/RegistrationValidator";
 
 const Register = (props: any) => {
-  console.log(props.logged)
   const [login, setLogin] = useState("");
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
-  const [token, setToken] = useState(localStorage.getItem("token"));
-  const [isLoggedIn, setIsLoggedIn] = useState(token!?.length > 0);
-
 
   const handleLoginChange = (e: any) => {
     setLogin(e.target.value)
@@ -42,8 +39,8 @@ const Register = (props: any) => {
 
   }
   return (
-    <div>
-      {!isLoggedIn ?
+    <>
+      {!isLoggedIn() ?
         <>
           <form>
             <div className="container">
@@ -78,7 +75,7 @@ const Register = (props: any) => {
           </form>
           <button className="btn btn-primary btn-block" onClick={handleRegister} >Register</button>
         </> : <p>Please logout first to create another account</p>}
-    </div>
+    </>
   )
 }
 

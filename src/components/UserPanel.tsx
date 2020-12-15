@@ -2,10 +2,8 @@ import React, { useState } from "react"
 import Register from './Users/Register'
 import Login from './Users/Login'
 import UserView from './Users/UserView'
+import { isLoggedIn } from "../utils/logged"
 const UserPanel = () => {
-  const [token, setToken] = useState(localStorage.getItem("token"));
-  const [isLoggedIn, setIsLoggedIn] = useState(token!?.length > 0);
-  console.log(token, isLoggedIn)
   const [tab, setTab] = useState(0);
 
   const handleChangeTab = (tab: number) => {
@@ -13,25 +11,23 @@ const UserPanel = () => {
   }
 
   const handleLogout = () => {
-    setIsLoggedIn(false);
     localStorage.setItem("token", "")
-    console.log(localStorage.getItem("token"))
   }
+  // console.log(isLoggedIn())
+  // if (isLoggedIn()) {
+  //   return (
+  //     <div className="container">
+  //       <UserView username={localStorage.getItem("username")} />
+  //       <div className="row">
+  //         <p>Hey {localStorage.getItem("username")}</p>
+  //       </div>
+  //       <div className="row">
+  //         <button className="btn btn-warning" onClick={handleLogout}>Logout</button>
+  //       </div>
+  //     </div>
 
-  if (isLoggedIn) {
-    return (
-      <div className="container">
-        <UserView username={localStorage.getItem("username")} />
-        <div className="row">
-          <p>Hey {localStorage.getItem("username")}</p>
-        </div>
-        <div className="row">
-          <button className="btn btn-warning" onClick={handleLogout}>Logout</button>
-        </div>
-      </div>
-
-    )
-  }
+  //   )
+  // }
   return (
     <div>
       <ul className="nav nav-tabs" >

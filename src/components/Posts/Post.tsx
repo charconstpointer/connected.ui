@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import CreateNewPostComment from "../../requests/CreateNewPostComment";
-import { isLoggedIn, getToken } from "../../utils/logged";
+import { isLoggedIn } from "../../utils/logged";
 import { Post as POST } from '../../utils/api'
 import { Validator } from "../../validators/Validator";
 import ErrorDisplay from "../Errors/ErrorDisplay";
@@ -18,10 +18,6 @@ const Post = (props: any) => {
     .addStep<string>(c => c.trim().length > 0, "comment cant be whitespace")
 
   const handleSendPost = async () => {
-    if (post === undefined) {
-      console.error("not ok")
-      return
-    }
     const result = validator.validate(post as string);
     if (!result.ok) {
       result.errors.forEach(err => console.error(err.reason))
