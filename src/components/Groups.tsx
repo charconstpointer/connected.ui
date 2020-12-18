@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import GroupModel, { fromJson } from "../models/GroupModel";
 import CreateNewGroup from '../requests/CreateNewGroup'
 import { Post as POST } from "../utils/api";
+import { isLoggedIn } from "../utils/logged";
 import GroupList from './GroupList'
 
 export const Groups = () => {
@@ -48,6 +49,7 @@ export const Groups = () => {
     <div>
       <h1 className="display-3 pb-5 pt-5">Available groups</h1>
       {!fetched ?
+
         <div className="spinner-border" role="status">
           <span className="sr-only">Loading...</span>
         </div> : groups.length > 0 ?
@@ -57,7 +59,7 @@ export const Groups = () => {
 
       }
 
-      <div className="create-group mt-5 shadow-sm p-3 mb-5 bg-white rounded">
+      {isLoggedIn() ? <div className="create-group mt-5 shadow-sm p-3 mb-5 bg-white rounded">
         <p className="lead">Nothing that suits your interests? Create your own group!</p>
         <div className="container mb-5 mt-5">
           <div className="input-group mb-3">
@@ -80,7 +82,7 @@ export const Groups = () => {
           </div>
           <a onClick={handleCreateGroup} className="btn btn-primary btn-block" href="#">Create</a>
         </div>
-      </div>
+      </div> : null}
     </div>
 
   )
