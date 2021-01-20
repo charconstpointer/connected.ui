@@ -10,14 +10,14 @@ import { isLoggedIn } from "../../utils/logged";
 import UserView from "./UserView";
 
 const Login = (props: any) => {
-  const [errors, setErrors] = useState<string[]>([]);
+  const [errors, setErrors] = useState<any[]>([]);
   const [login, setLogin] = useState("");
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
 
   const validator = new Validator()
-    .addStep<LoginRequest>(r => r.username.trim().length > 0, "username cannot be empty")
-    .addStep<LoginRequest>(r => r.username.trim().length > 0, "password cannot be empty");
+    .addStep<LoginRequest>(r => r.username.trim().length > 0, "username cannot be empty", "username")
+    .addStep<LoginRequest>(r => r.username.trim().length > 0, "password cannot be empty", "password");
 
   const handleLoginChange = (e: any) => {
     setLogin(e.target.value)
@@ -34,7 +34,7 @@ const Login = (props: any) => {
 
     if (!validationResult.ok) {
       validationResult.errors.forEach(err => console.error(err.reason))
-      setErrors([...errors, ...validationResult.errors.map(e => e.reason)])
+      setErrors([...errors, ...validationResult.errors.map(e => e)])
       return
     }
 
@@ -71,6 +71,8 @@ const Login = (props: any) => {
                   </div>
                   <input type="text" onChange={handleLoginChange} className="form-control" placeholder="" aria-label="Username"
                     aria-describedby="basic-addon1" />
+                  <ErrorDisplay errors={errors} for='username' />
+
                 </div>
               </div>
               <div className="row">
@@ -80,10 +82,13 @@ const Login = (props: any) => {
                   </div>
                   <input type="password" onChange={handlePasswordChange} className="form-control" placeholder="" aria-label="Username"
                     aria-describedby="basic-addon1" />
+                  <ErrorDisplay errors={errors} for='password' />
+
                 </div>
               </div>
             </div>
           </form>
+
           <button className="btn btn-primary btn-block" onClick={handleLogin} >Login</button>
 
           <div className="row mt-1">

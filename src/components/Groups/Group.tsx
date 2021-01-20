@@ -36,7 +36,7 @@ const Group = () => {
     setPost(e.target.value)
   }
   const validator = new Validator()
-    .addStep<string>(p => p.trim().length > 0, "post cannot be empty or all whitespace")
+    .addStep<string>(p => p.trim().length > 0, "post cannot be empty or all whitespace", "post")
   const handleSendPost = async () => {
     const result = validator.validate(post);
     if (!result.ok) {

@@ -16,8 +16,8 @@ const Post = (props: any) => {
   const [errors, setErrors] = useState<string[]>([]);
   const validator = new Validator();
   validator
-    .addStep<string>(c => c.length > 0, "comment cannot be null")
-    .addStep<string>(c => c.trim().length > 0, "comment cant be whitespace")
+    .addStep<string>(c => c.length > 0, "comment cannot be null", "comment")
+    .addStep<string>(c => c.trim().length > 0, "comment cant be whitespace", "comment")
   useEffect(() => {
     if (post === undefined) {
       setPost(props.p)

@@ -5,17 +5,17 @@ export class Validator {
   constructor() {
     this.steps = []
   }
-  addStep<T>(f: (s: T) => boolean, desc: string): Validator {
-    this.steps.push(new ValidationStep(f, desc))
+  addStep<T>(f: (s: T) => boolean, desc: string, forField: string): Validator {
+    this.steps.push(new ValidationStep(f, desc, forField))
     return this;
   }
   validate<T>(value: T): ValidationResult {
     if (value === null || value === undefined) {
-      return ValidationResult.fromErrors([new ValidatorError(false, "value cannot be null or undefined")])
+      return ValidationResult.fromErrors([new ValidatorError(false, "value cannot be null or undefined", "null")])
     }
     const fx = this.steps.map(f => {
       const result = f.f(value)
-      return new ValidatorError(result, f.reason);
+      return new ValidatorError(result, f.reason, f.forField);
     })
     return ValidationResult.fromErrors(fx);
   }
@@ -23,18 +23,22 @@ export class Validator {
 class ValidationStep {
   f: Function;
   reason: string;
-  constructor(f: Function, reason: string) {
+  forField: string;
+  constructor(f: Function, reason: string, forField: string) {
     this.f = f;
     this.reason = reason;
+    this.forField = forField;
   }
 }
 
 class ValidatorError {
   success: boolean
   reason: string
-  constructor(success: boolean, reason: string) {
+  forField: string;
+  constructor(success: boolean, reason: string, forField: string) {
     this.success = success;
     this.reason = reason;
+    this.forField = forField;
   }
 }
 

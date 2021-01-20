@@ -10,13 +10,13 @@ const Register = (props: any) => {
   const [login, setLogin] = useState("");
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
-  const [errors, setErrors] = useState<string[]>([]);
+  const [errors, setErrors] = useState<any[]>([]);
   const validator = new Validator()
-    .addStep<RegisterRequest>(r => r.email.trim().length > 0, "email cannot be empty")
-    .addStep<RegisterRequest>(r => r.username.trim().length > 0, "userame cannot be empty")
-    .addStep<RegisterRequest>(r => r.password.trim().length > 5, "password must be longer than 5 characters")
-    .addStep<RegisterRequest>(r => r.password.includes("*"), "password must contain *")
-    
+    .addStep<RegisterRequest>(r => r.email.trim().length > 0, "email cannot be empty", "email")
+    .addStep<RegisterRequest>(r => r.username.trim().length > 0, "userame cannot be empty", "username")
+    .addStep<RegisterRequest>(r => r.password.trim().length > 5, "password must be longer than 5 characters", "password")
+    .addStep<RegisterRequest>(r => r.password.includes("*"), "password must contain *", "password")
+
   const handleLoginChange = (e: any) => {
     setLogin(e.target.value)
   }
@@ -31,7 +31,7 @@ const Register = (props: any) => {
     const request = new RegisterRequest(login, password, email);
     const validationResult = validator.validate(request);
     if (!validationResult.ok) {
-      setErrors([...errors, ...validationResult.errors.map(e => e.reason)])
+      setErrors([...errors, ...validationResult.errors.map(e => e)])
       return
     }
 
@@ -60,6 +60,7 @@ const Register = (props: any) => {
                   </div>
                   <input type="text" onChange={handleLoginChange} className="form-control" placeholder="" aria-label="Username"
                     aria-describedby="basic-addon1" />
+                  <ErrorDisplay errors={errors} for='username' />
                 </div>
               </div>
               <div className="row">
@@ -69,6 +70,7 @@ const Register = (props: any) => {
                   </div>
                   <input type="password" onChange={handlePasswordChange} className="form-control" placeholder="" aria-label="Password"
                     aria-describedby="basic-addon1" />
+                  <ErrorDisplay errors={errors} for='password' />
                 </div>
               </div>
               <div className="row">
@@ -78,12 +80,13 @@ const Register = (props: any) => {
                   </div>
                   <input type="email" onChange={handleEmailChange} className="form-control" placeholder="" aria-label="Email"
                     aria-describedby="basic-addon1" />
+                  <ErrorDisplay errors={errors} for='email' />
                 </div>
               </div>
             </div>
           </form>
           <button className="btn btn-primary btn-block" onClick={handleRegister} >Register</button>
-          <ErrorDisplay errors={errors} />
+          {/* <ErrorDisplay errors={errors} /> */}
         </> : <p>Please logout first to create another account</p>}
     </>
   )

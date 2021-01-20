@@ -6,7 +6,7 @@ const Contact = () => {
   const [errors, setErrors] = useState<string[]>([]);
   const [message, setMessage] = useState("");
   const [author, setAuthor] = useState("");
-  const validator = new Validator().addStep<string>(c => c.trim().length > 0, "value cannot be empty or all whitespace");
+  const validator = new Validator().addStep<string>(c => c.trim().length > 0, "value cannot be empty or all whitespace", "");
   const handleSendForm = () => {
     console.log(author, message)
     const messageValidation = validator.validate(message);
