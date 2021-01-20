@@ -13,7 +13,7 @@ import ErrorDisplay from "../Errors/ErrorDisplay";
 const Group = () => {
   let params: any = useParams();
   const [group, setGroup] = useState<GroupModel>();
-  const [errors, setErrors] = useState<string[]>([]);
+  const [errors, setErrors] = useState<any[]>([]);
   const [post, setPost] = useState<string>();
 
   const id = params.id;
@@ -36,11 +36,11 @@ const Group = () => {
     setPost(e.target.value)
   }
   const validator = new Validator()
-    .addStep<string>(p => p.trim().length > 0, "post cannot be empty or all whitespace", "post")
+    .addStep<string>(p => p.trim().length > 0, "post cannot be empty or all whitespace", "text")
   const handleSendPost = async () => {
     const result = validator.validate(post);
     if (!result.ok) {
-      setErrors([...errors, ...result.errors.map(e => e.reason)])
+      setErrors([...errors, ...result.errors.map(e => e)])
       return
     }
     const response = await POST(`https://localhost:5001/groups/${group?.id}/posts`, new CreateNewPost(post!))
@@ -67,6 +67,7 @@ const Group = () => {
             <span className="input-group-text">📜</span>
           </div>
           <textarea onChange={handlePostChange} className="form-control " aria-label="With textarea"></textarea>
+          <ErrorDisplay errors={errors} for='text' />
         </div>
         <button onClick={handleSendPost} className="btn btn-primary btn-block">Add new post 🖋</button>
         <ErrorDisplay errors={errors} />
