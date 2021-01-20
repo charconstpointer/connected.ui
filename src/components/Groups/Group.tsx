@@ -6,7 +6,7 @@ import PostModel, { postFromJson } from "../../models/PostModel";
 import CreateNewPost from '../../requests/CreateNewPost'
 import { Post as POST } from "../../utils/api";
 import Post from '../Posts/Post'
-import { Validator } from '../../validators/Validator'
+import { Validator, ValidatorError } from '../../validators/Validator'
 import { isLoggedIn } from "../../utils/logged";
 import ErrorDisplay from "../Errors/ErrorDisplay";
 
@@ -45,8 +45,10 @@ const Group = () => {
     }
     const response = await POST(`https://localhost:5001/groups/${group?.id}/posts`, new CreateNewPost(post!))
     if (response.status !== 200) {
-      setErrors([...errors, "Could not send your post 😭"])
-      return
+      // setErrors([...errors, "Could not send your post 😭"])
+      // return
+      const errMsg = await response.json()
+      setErrors([new ValidatorError(false, errMsg.Message, "server")])
     }
     fetchGroup()
     setErrors([])
@@ -70,7 +72,9 @@ const Group = () => {
           <ErrorDisplay errors={errors} for='text' />
         </div>
         <button onClick={handleSendPost} className="btn btn-primary btn-block">Add new post 🖋</button>
-        <ErrorDisplay errors={errors} />
+        <div className="row mt-1">
+          <ErrorDisplay errors={errors} for='server' />
+        </div>
       </div> : null
       }
     </div>

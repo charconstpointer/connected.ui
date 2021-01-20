@@ -3,7 +3,7 @@ import { useState } from "react";
 import RegisterRequest from "../../requests/RegisterRequest";
 import { isLoggedIn } from "../../utils/logged";
 import { v } from "../../validators/RegistrationValidator";
-import { Validator } from "../../validators/Validator";
+import { Validator, ValidatorError } from "../../validators/Validator";
 import ErrorDisplay from "../Errors/ErrorDisplay";
 
 const Register = (props: any) => {
@@ -44,7 +44,9 @@ const Register = (props: any) => {
     })
     console.log(response.status)
     if (response.status !== 201) {
-      setErrors([...errors, ...validationResult.errors.map(e => e.reason)])
+      // setErrors([...errors, ...validationResult.errors.map(e => e.reason)])
+      const errMsg = await response.json()
+      setErrors([new ValidatorError(false, errMsg.Message, "server")])
     }
   }
   return (
@@ -86,7 +88,9 @@ const Register = (props: any) => {
             </div>
           </form>
           <button className="btn btn-primary btn-block" onClick={handleRegister} >Register</button>
-          {/* <ErrorDisplay errors={errors} /> */}
+          <div className="row mt-1">
+            <ErrorDisplay errors={errors} for='server' />
+          </div>
         </> : <p>Please logout first to create another account</p>}
     </>
   )

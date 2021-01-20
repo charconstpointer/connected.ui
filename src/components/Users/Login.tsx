@@ -3,7 +3,7 @@ import { lv } from "../../validators/LoginValidator";
 import LoginRequest from '../../requests/LoginRequest'
 import React from "react";
 import { Post as POST } from "../../utils/api";
-import { Validator } from '../../validators/Validator'
+import { Validator, ValidatorError } from '../../validators/Validator'
 import ErrorDisplay from '../Errors/ErrorDisplay'
 import { FormState } from '../../validators/FormState'
 import { isLoggedIn } from "../../utils/logged";
@@ -41,6 +41,8 @@ const Login = (props: any) => {
     const response = await POST("https://localhost:5001/auth", request);
     if (!response.ok) {
       console.error("could not login");
+      const errMsg = await response.json()
+      setErrors([new ValidatorError(false, errMsg.Message, "server")])
       return;
     }
     const token = await response.text();
@@ -92,7 +94,7 @@ const Login = (props: any) => {
           <button className="btn btn-primary btn-block" onClick={handleLogin} >Login</button>
 
           <div className="row mt-1">
-            <ErrorDisplay errors={errors} />
+            <ErrorDisplay errors={errors} for='server' />
           </div>
         </>
         :

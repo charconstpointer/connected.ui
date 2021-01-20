@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import CreateNewPostComment from "../../requests/CreateNewPostComment";
 import { isLoggedIn } from "../../utils/logged";
 import { Get as GET, Post as POST } from '../../utils/api'
-import { Validator } from "../../validators/Validator";
+import { Validator, ValidatorError } from "../../validators/Validator";
 import ErrorDisplay from "../Errors/ErrorDisplay";
 import PostModel, { postFromJson } from "../../models/PostModel";
 
@@ -13,7 +13,7 @@ const Post = (props: any) => {
   const handlePostChange = (e: any) => {
     setPostMessage(e.target.value)
   }
-  const [errors, setErrors] = useState<string[]>([]);
+  const [errors, setErrors] = useState<any[]>([]);
   const validator = new Validator();
   validator
     .addStep<string>(c => c.length > 0, "comment cannot be null", "comment")
@@ -42,6 +42,8 @@ const Post = (props: any) => {
     const response = await GET(`https://localhost:5001/groups/${props.groupId}/posts/${props.p.id}`);
     if (!response.ok) {
       console.error("could not fetch post")
+      const errMsg = await response.json()
+      setErrors([new ValidatorError(false, errMsg.Message, "server")])
     }
     const data = await response.json();
     console.log(data)
@@ -101,7 +103,9 @@ const Post = (props: any) => {
         </div> : null}
       </div>
 
-      <ErrorDisplay errors={errors} />
+      <div className="row mt-1">
+        <ErrorDisplay errors={errors} for='server' />
+      </div>
     </div >
   )
 }

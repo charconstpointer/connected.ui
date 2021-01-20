@@ -43,6 +43,7 @@ export const Groups = () => {
     if (response.status !== 500) {
       fetchGroups()
     }
+
   }
 
   return (

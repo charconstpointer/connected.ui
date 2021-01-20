@@ -31,7 +31,7 @@ class ValidationStep {
   }
 }
 
-class ValidatorError {
+export class ValidatorError {
   success: boolean
   reason: string
   forField: string;
