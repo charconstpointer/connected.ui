@@ -73,7 +73,9 @@ export const Groups = () => {
         </div> : groups.length > 0 ?
           <GroupList groups={groups} />
           :
-          <p>nope</p>
+          <div className="row mt-1">
+            <h5>Could not find any groups 😕</h5>
+          </div>
       }
 
       {isLoggedIn() ? <div className="create-group mt-5 shadow-sm p-3 mb-5 bg-white rounded">

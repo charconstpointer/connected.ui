@@ -28,7 +28,7 @@ const UserView = (props: any) => {
       <div className="row">
 
         <ul className="list-group list-group-flush col-12">
-          {userInfo?.groups.map(g =>
+          {userInfo?.groups?.map(g =>
             <li className="list-group-item">
               <Link to={`groups/${g.id}`} >
                 <p>{g.name}</p>

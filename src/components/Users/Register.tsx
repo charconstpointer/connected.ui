@@ -47,7 +47,10 @@ const Register = (props: any) => {
       // setErrors([...errors, ...validationResult.errors.map(e => e.reason)])
       const errMsg = await response.json()
       setErrors([new ValidatorError(false, errMsg.Message, "server")])
+      return
     }
+
+    alert("Successfully registered new user, you can now log in")
   }
   return (
     <>

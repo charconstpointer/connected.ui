@@ -19,7 +19,7 @@ export default class UserInfoModel {
   constructor(username: string, email: string, groups: Array<any>) {
     this.username = username;
     this.email = email;
-    this.groups = groups.map(groupFromJson)
+    this.groups = groups?.map(groupFromJson)
   }
 }
 
