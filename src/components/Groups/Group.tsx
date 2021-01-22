@@ -36,11 +36,13 @@ const Group = () => {
     setPost(e.target.value)
   }
   const validator = new Validator()
-    .addStep<string>(p => p.trim().length > 0, "post cannot be empty or all whitespace", "text")
+    .addStep<string>(p => p?.trim().length > 0, "post cannot be empty or all whitespace", "text")
   const handleSendPost = async () => {
     const result = validator.validate(post);
     if (!result.ok) {
       setErrors([...errors, ...result.errors.map(e => e)])
+      console.log("notookkkk", errors, result);
+
       return
     }
     const response = await POST(`https://localhost:5001/groups/${group?.id}/posts`, new CreateNewPost(post!))
